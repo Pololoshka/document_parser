@@ -4,6 +4,7 @@ from typing import Any
 
 import pytest
 from dotenv import load_dotenv
+from fastapi import FastAPI
 from httpx import ASGITransport, AsyncClient
 
 from settings import DBSettings
@@ -24,14 +25,14 @@ def event_loop(
 
 
 @pytest.fixture()
-def app(event_loop: Generator[asyncio.AbstractEventLoop, Any, None]) -> AsyncClient:
+def app(event_loop: Generator[asyncio.AbstractEventLoop, Any, None]) -> FastAPI:
     from main import app as _app
 
-    return _app  # type: ignore
+    return _app
 
 
 @pytest.fixture()
-async def client(app: AsyncClient) -> AsyncGenerator:
+async def client(app: FastAPI) -> AsyncGenerator[AsyncClient, None]:
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://localhost") as client:  # type: ignore
         yield client
 
@@ -44,10 +45,7 @@ def _override_dependency(
 ) -> None:
     from src.db.db_connect import uow as uow_
 
-    async def foo() -> AsyncGenerator:
-        yield uow
-
-    app.dependency_overrides[uow_] = foo  # type: ignore
+    app.dependency_overrides[uow_] = lambda: uow  # type: ignore
 
 
 @pytest.fixture()
