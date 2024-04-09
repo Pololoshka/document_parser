@@ -1,9 +1,16 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from sqlalchemy import URL
 
+class AppSettings(BaseSettings):
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+
+    app_host: str
+    app_port: int = 8000
+    debug: bool = False
+
 
 class DBSettings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env")
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     db_name: str
     db_user: str

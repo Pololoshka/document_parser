@@ -15,7 +15,7 @@ function Home() {
 
   function handleFileUpload(event) {
     const file = event.target.files[0];
-    console.log(file)
+    console.log(file);
     const formData = new FormData();
     formData.append("file", file);
     AxiosInstance.post(`api/documents/`, formData, {
@@ -33,8 +33,12 @@ function Home() {
         console.log(response);
       })
       .catch((error) => {
-        console.log(error.response.data.detail);
-        setMessageError(error.response.data.detail);
+        if (error.response.status === 413) {
+          setMessageError("The file must be no larger than 1 MB in size");
+        } else {
+          setMessageError(error.response.data.detail);
+        }
+        console.log(error.response);
         setValidFile(false);
         setDownloadFile(false);
       });

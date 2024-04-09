@@ -3,7 +3,7 @@ from itertools import islice
 
 from src.db.models import Word
 from src.db.uow import SqlAlchemyUnitOfWork
-from src.models_pydantic import FileContent, WordScore
+from src.domain_models import FileContent, WordScore
 
 
 class CalculateTFIDFHandler:

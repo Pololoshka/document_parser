@@ -1,3 +1,4 @@
+import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -5,7 +6,7 @@ from src.views import router
 
 app = FastAPI()
 
-origins = ["http://localhost:3000", "localhost:3000"]
+origins = ["*"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -15,3 +16,9 @@ app.add_middleware(
 )
 
 app.include_router(router)
+
+if __name__ == "__main__":
+    from settings import AppSettings
+
+    settings = AppSettings()
+    uvicorn.run("main:app", host=settings.app_host, port=settings.app_port, reload=settings.debug)

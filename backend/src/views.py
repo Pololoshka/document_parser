@@ -3,8 +3,8 @@ from pydantic import BaseModel, field_validator
 
 from src.db.db_connect import uow
 from src.db.uow import SqlAlchemyUnitOfWork
+from src.domain_models import FileContent, WordScore
 from src.handler import CalculateTFIDFHandler
-from src.models_pydantic import FileContent, WordScore
 
 router = APIRouter(prefix="/api/documents")
 
