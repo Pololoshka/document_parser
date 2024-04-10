@@ -57,6 +57,7 @@
 ```bash
 docker compose up -d
 ```
+Для открытия веб-приложения в браузере в адресную строку введите [http://localhost/](http://localhost/)
 
 # Разработка
 
