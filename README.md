@@ -37,6 +37,7 @@
   - React
   - Axios
   - Material UI
+- PostgreSQL
 - Docker
 - Docker Compose
 - Nginx
